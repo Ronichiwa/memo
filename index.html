@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Memories 💗</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       BASIC SETUP
+    ========================================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #fff1f3;
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    /* =========================================================
+       BACKGROUND
+    ========================================================= */
+
+    .background-hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      color: #ffb3c1;
+      opacity: 0.6;
+      animation: floatHeart linear infinite;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* =========================================================
+       PAGE SYSTEM
+    ========================================================= */
+
+    .page {
+      position: absolute;
+      inset: 0;
+      min-height: 100vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      padding: 30px 20px;
+
+      overflow-y: auto;
+
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.97);
+
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s ease,
+        visibility 0.6s ease;
+
+      z-index: 1;
+    }
+
+    .page.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+
+    .page.top-page {
+      justify-content: flex-start;
+      padding-top: 50px;
+      padding-bottom: 80px;
+    }
+
+    /* =========================================================
+       INTRO PAGE
+    ========================================================= */
+
+    #intro {
+      background: #fff1f3;
+    }
+
+    .intro-card {
+      width: 90%;
+      max-width: 600px;
+
+      background: white;
+
+      padding: 45px 35px;
+
+      border-radius: 28px;
+
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.12);
+
+      position: relative;
+
+      animation: gentlePulse 4s infinite;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.01);
+      }
+    }
+
+    .intro-heart {
+      font-size: 70px;
+      margin-bottom: 10px;
+      animation: heartBeat 1.5s infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.12);
+      }
+    }
+
+    .intro-card h1 {
+      color: #ff4d6d;
+      font-size: 2.8rem;
+      margin: 10px 0 20px;
+    }
+
+    .intro-card p {
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 25px;
+    }
+
+    /* =========================================================
+       MAIN HEADINGS
+    ========================================================= */
+
+    h1 {
+      color: #ff4d6d;
+      font-size: 2.5rem;
+      margin: 10px 0 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .subtitle {
+      max-width: 600px;
+      color: #666;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+
+    button {
+      border: none;
+
+      background: #ff4d6d;
+      color: white;
+
+      padding: 13px 28px;
+
+      border-radius: 999px;
+
+      font-size: 15px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      margin-top: 18px;
+
+      box-shadow:
+        0 8px 20px rgba(255, 77, 109, 0.35);
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      background: #ff3357;
+
+      box-shadow:
+        0 12px 25px rgba(255, 77, 109, 0.45);
+    }
+
+    button.secondary {
+      background: #e7e7e7;
+      color: #444;
+
+      box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    button.secondary:hover {
+      background: #d8d8d8;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* =========================================================
+       COVER / WELCOME
+    ========================================================= */
+
+    .cover-image {
+      width: 230px;
+      height: 230px;
+
+      object-fit: cover;
+
+      border-radius: 50%;
+
+      border: 8px solid #ffd6de;
+
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.15);
+
+      animation: floatingImage 3s ease-in-out infinite;
+    }
+
+    @keyframes floatingImage {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* =========================================================
+       MEMORY GRID
+    ========================================================= */
+
+    .memories-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 20px;
+
+      width: 100%;
+      max-width: 650px;
+
+      margin: 25px auto;
+    }
+
+    .memory {
+      background: white;
+
+      padding: 10px 10px 16px;
+
+      border-radius: 15px;
+
+      box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.15);
+
+      transform: rotate(var(--rotation));
+
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .memory:hover {
+      transform:
+        rotate(0deg)
+        scale(1.05);
+
+      box-shadow:
+        0 18px 35px rgba(0, 0, 0, 0.2);
+
+      z-index: 2;
+    }
+
+    .memory img {
+      display: block;
+
+      width: 100%;
+      height: 150px;
+
+      object-fit: cover;
+
+      border-radius: 10px;
+    }
+
+    .memory-caption {
+      margin-top: 10px;
+
+      font-size: 12px;
+
+      color: #777;
+
+      line-height: 1.4;
+    }
+
+    .memory-note {
+      max-width: 550px;
+
+      color: #666;
+
+      font-style: italic;
+
+      line-height: 1.8;
+
+      margin: 10px auto 20px;
+    }
+
+    /* =========================================================
+       SINGLE PHOTO
+    ========================================================= */
+
+    .large-photo {
+      width: 90%;
+      max-width: 500px;
+
+      max-height: 500px;
+
+      object-fit: cover;
+
+      border-radius: 20px;
+
+      box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.15);
+
+      margin: 20px 0;
+    }
+
+    /* =========================================================
+       MEMORY STORY CARD
+    ========================================================= */
+
+    .story-card {
+      width: 90%;
+      max-width: 600px;
+
+      background: white;
+
+      padding: 30px;
+
+      border-radius: 24px;
+
+      box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.12);
+
+      text-align: left;
+
+      line-height: 1.8;
+    }
+
+    .story-card h2 {
+      color: #ff4d6d;
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .story-card p {
+      color: #555;
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       LETTER
+    ========================================================= */
+
+    .letter-wrapper {
+      width: 90%;
+      max-width: 600px;
+
+      background:
+        linear-gradient(
+          rgba(255,255,255,0.97),
+          rgba(255,255,255,0.97)
+        );
+
+      padding: 35px;
+
+      border-radius: 24px;
+
+      box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.12);
+
+      text-align: left;
+    }
+
+    .letter-wrapper p {
+      font-size: 14.5px;
+
+      line-height: 1.9;
+
+      color: #555;
+    }
+
+    .letter-signature {
+      text-align: right;
+
+      color: #ff4d6d;
+
+      font-weight: bold;
+
+      margin-top: 25px;
+    }
+
+    /* =========================================================
+       TIMELINE
+    ========================================================= */
+
+    .timeline {
+      width: 90%;
+      max-width: 650px;
+
+      position: relative;
+
+      margin: 20px auto;
+    }
+
+    .timeline::before {
+      content: "";
+
+      position: absolute;
+
+      left: 50%;
+
+      top: 0;
+      bottom: 0;
+
+      width: 3px;
+
+      background: #ffc4cf;
+
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      width: 50%;
+
+      padding: 10px 25px;
+
+      position: relative;
+    }
+
+    .timeline-item.left {
+      text-align: right;
+      left: 0;
+    }
+
+    .timeline-item.right {
+      text-align: left;
+      left: 50%;
+    }
+
+    .timeline-dot {
+      position: absolute;
+
+      width: 16px;
+      height: 16px;
+
+      background: #ff4d6d;
+
+      border-radius: 50%;
+
+      top: 25px;
+    }
+
+    .timeline-item.left .timeline-dot {
+      right: -8px;
+    }
+
+    .timeline-item.right .timeline-dot {
+      left: -8px;
+    }
+
+    .timeline-content {
+      background: white;
+
+      padding: 18px;
+
+      border-radius: 18px;
+
+      box-shadow:
+        0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .timeline-content h3 {
+      margin: 0 0 8px;
+
+      color: #ff4d6d;
+
+      font-size: 17px;
+    }
+
+    .timeline-content p {
+      margin: 0;
+
+      color: #666;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       MUSIC
+    ========================================================= */
+
+    .music-card {
+      width: 90%;
+      max-width: 500px;
+
+      background: white;
+
+      padding: 30px;
+
+      border-radius: 24px;
+
+      box-shadow:
+        0 15px 40px rgba(0,0,0,0.12);
+    }
+
+    .music-card iframe {
+      width: 100%;
+
+      max-width: 400px;
+
+      border: none;
+
+      border-radius: 16px;
+
+      margin-top: 15px;
+    }
+
+    .song-note {
+      color: #666;
+
+      font-style: italic;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+
+      margin-top: 20px;
+    }
+
+    /* =========================================================
+       FINAL PAGE
+    ========================================================= */
+
+    .final-card {
+      width: 90%;
+      max-width: 600px;
+
+      background: white;
+
+      padding: 40px 30px;
+
+      border-radius: 28px;
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.12);
+    }
+
+    .final-heart {
+      font-size: 70px;
+
+      animation: heartBeat 1.5s infinite;
+    }
+
+    .final-card p {
+      color: #555;
+
+      line-height: 1.9;
+
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       PHOTO VIEWER
+    ========================================================= */
+
+    .photo-modal {
+      position: fixed;
+
+      inset: 0;
+
+      background: rgba(0,0,0,0.85);
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      z-index: 9999;
+
+      padding: 20px;
+    }
+
+    .photo-modal.active {
+      display: flex;
+    }
+
+    .photo-modal img {
+      max-width: 95%;
+      max-height: 85vh;
+
+      object-fit: contain;
+
+      border-radius: 15px;
+
+      box-shadow:
+        0 20px 50px rgba(0,0,0,0.4);
+    }
+
+    .close-modal {
+      position: fixed;
+
+      top: 20px;
+      right: 20px;
+
+      width: 45px;
+      height: 45px;
+
+      border-radius: 50%;
+
+      background: white;
+
+      color: #ff4d6d;
+
+      font-size: 25px;
+
+      padding: 0;
+
+      margin: 0;
+
+      box-shadow: none;
+    }
+
+    /* =========================================================
+       TOP CONTROLS
+    ========================================================= */
+
+    .mute-button {
+      position: fixed;
+
+      top: 18px;
+      right: 18px;
+
+      width: 45px;
+      height: 45px;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,0.7);
+
+      backdrop-filter: blur(8px);
+
+      color: #ff4d6d;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 20px;
+
+      padding: 0;
+
+      margin: 0;
+
+      z-index: 5000;
+
+      box-shadow:
+        0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .progress {
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      height: 4px;
+
+      width: 0%;
+
+      background: #ff4d6d;
+
+      z-index: 6000;
+
+      transition: width 0.5s ease;
+    }
+
+    .watermark {
+      position: fixed;
+
+      bottom: 12px;
+      right: 15px;
+
+      font-size: 11px;
+
+      color: #aaa;
+
+      z-index: 4000;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 700px) {
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .intro-card {
+        padding: 35px 20px;
+      }
+
+      .intro-card h1 {
+        font-size: 2.2rem;
+      }
+
+      .memories-grid {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 15px;
+
+        max-width: 500px;
+      }
+
+      .memory img {
+        height: 130px;
+      }
+
+      .story-card,
+      .letter-wrapper,
+      .music-card,
+      .final-card {
+        padding: 25px 20px;
+      }
+
+      .timeline::before {
+        left: 15px;
+      }
+
+      .timeline-item,
+      .timeline-item.left,
+      .timeline-item.right {
+        width: 100%;
+
+        left: 0;
+
+        padding-left: 45px;
+
+        padding-right: 5px;
+
+        text-align: left;
+      }
+
+      .timeline-item.left .timeline-dot,
+      .timeline-item.right .timeline-dot {
+        left: 7px;
+        right: auto;
+      }
+
+      .cover-image {
+        width: 190px;
+        height: 190px;
+      }
+    }
+
+    @media (max-width: 430px) {
+
+      .memories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      .memory {
+        padding: 7px 7px 12px;
+      }
+
+      .memory img {
+        height: 110px;
+      }
+
+      .memory-caption {
+        font-size: 10px;
+      }
+
+      button {
+        padding: 11px 22px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =======================================================
+       BACKGROUND HEARTS
+  ======================================================== -->
+
+  <div class="background-hearts" id="backgroundHearts"></div>
+
+  <!-- Progress Bar -->
+  <div class="progress" id="progressBar"></div>
+
+  <!-- Music Button -->
+  <button class="mute-button" id="muteBtn">🔇</button>
+
+  <!-- =======================================================
+       PAGE 1 — INTRO
+  ======================================================== -->
+
+  <section class="page active" id="intro">
+
+    <div class="intro-card">
+
+      <div class="intro-heart">
+        💗
+      </div>
+
+      <h1>A Little Memory Book</h1>
+
+      <p>
+        I made this little website to keep some of
+        my favorite memories in one place.
+
+        <br><br>
+
+        Every picture, every moment, and every little
+        story here means something to me.
+      </p>
+
+      <button onclick="go('welcome')">
+        Open Our Memories 💕
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 2 — WELCOME
+  ======================================================== -->
+
+  <section class="page" id="welcome">
+
+    <!--
+      CHANGE THIS IMAGE
+      Replace "cover.jpg" with your own picture.
+    -->
+
+    <img
+      class="cover-image"
+      src="cover.jpg"
+      alt="Our memory"
+      onclick="openPhoto(this.src)"
+    >
+
+    <h1>Welcome to Our Memories 💗</h1>
+
+    <p class="subtitle">
+      Some moments only happen once,
+      but the memories can stay with us forever.
+
+      <br><br>
+
+      So here's a little collection of moments
+      that I never want to forget.
+    </p>
+
+    <button onclick="go('memories1')">
+      Let's Remember → 
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 3 — MEMORIES 1
+  ======================================================== -->
+
+  <section class="page top-page" id="memories1">
+
+    <h1>Some of My Favorite Moments 📸</h1>
+
+    <p class="subtitle">
+      These are some of the pictures that I always
+      enjoy looking back at.
+    </p>
+
+    <div class="memories-grid">
+
+      <!-- CHANGE YOUR PHOTOS HERE -->
+
+      <div class="memory" style="--rotation:-3deg">
+        <img src="mem1.jpg" onclick="openPhoto(this.src)" alt="Memory 1">
+        <div class="memory-caption">A moment I'll always remember 💗</div>
+      </div>
+
+      <div class="memory" style="--rotation:2deg">
+        <img src="mem2.jpg" onclick="openPhoto(this.src)" alt="Memory 2">
+        <div class="memory-caption">One of my favorites 🥹</div>
+      </div>
+
+      <div class="memory" style="--rotation:-2deg">
+        <img src="mem3.jpg" onclick="openPhoto(this.src)" alt="Memory 3">
+        <div class="memory-caption">Such a nice memory 💕</div>
+      </div>
+
+      <div class="memory" style="--rotation:3deg">
+        <img src="mem4.jpg" onclick="openPhoto(this.src)" alt="Memory 4">
+        <div class="memory-caption">I still remember this 🫶</div>
+      </div>
+
+      <div class="memory" style="--rotation:-1deg">
+        <img src="mem5.jpg" onclick="openPhoto(this.src)" alt="Memory 5">
+        <div class="memory-caption">A little moment ❤️</div>
+      </div>
+
+      <div class="memory" style="--rotation:2deg">
+        <img src="mem6.jpg" onclick="openPhoto(this.src)" alt="Memory 6">
+        <div class="memory-caption">Forever a favorite 💗</div>
+      </div>
+
+    </div>
+
+    <p class="memory-note">
+      "Some pictures are more than just pictures.
+      They bring back an entire moment."
+    </p>
+
+    <button onclick="go('memories2')">
+      More Memories →
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 4 — MEMORIES 2
+  ======================================================== -->
+
+  <section class="page top-page" id="memories2">
+
+    <h1>More Moments 💞</h1>
+
+    <p class="subtitle">
+      And of course, I couldn't leave these ones out.
+    </p>
+
+    <div class="memories-grid">
+
+      <!-- CHANGE YOUR PHOTOS HERE -->
+
+      <div class="memory" style="--rotation:2deg">
+        <img src="mem7.jpg" onclick="openPhoto(this.src)" alt="Memory 7">
+        <div class="memory-caption">This one 🥹</div>
+      </div>
+
+      <div class="memory" style="--rotation:-3deg">
+        <img src="mem8.jpg" onclick="openPhoto(this.src)" alt="Memory 8">
+        <div class="memory-caption">Another favorite 💕</div>
+      </div>
+
+      <div class="memory" style="--rotation:1deg">
+        <img src="mem9.jpg" onclick="openPhoto(this.src)" alt="Memory 9">
+        <div class="memory-caption">Good times ❤️</div>
+      </div>
+
+      <div class="memory" style="--rotation:-2deg">
+        <img src="mem10.jpg" onclick="openPhoto(this.src)" alt="Memory 10">
+        <div class="memory-caption">Still makes me smile</div>
+      </div>
+
+      <div class="memory" style="--rotation:3deg">
+        <img src="mem11.jpg" onclick="openPhoto(this.src)" alt="Memory 11">
+        <div class="memory-caption">One I'll treasure 💗</div>
+      </div>
+
+      <div class="memory" style="--rotation:-1deg">
+        <img src="mem12.jpg" onclick="openPhoto(this.src)" alt="Memory 12">
+        <div class="memory-caption">A special moment 🫶</div>
+      </div>
+
+    </div>
+
+    <p class="memory-note">
+      "Looking back at these moments always reminds me
+      how many little things can become unforgettable."
+    </p>
+
+    <button onclick="go('story')">
+      Continue →
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 5 — STORY
+  ======================================================== -->
+
+  <section class="page" id="story">
+
+    <h1>Our Little Story 📖</h1>
+
+    <div class="story-card">
+
+      <h2>How It All Became Memories</h2>
+
+      <!--
+        CHANGE THIS TEXT TO YOUR OWN STORY
+      -->
+
+      <p>
+        Sometimes the smallest moments end up becoming
+        the memories that we remember the most.
+      </p>
+
+      <p>
+        Maybe it was a random conversation,
+        a funny picture, a simple day together,
+        or something that didn't seem important at the time.
+      </p>
+
+      <p>
+        But when I look back at everything,
+        I realize how special those little moments actually were.
+      </p>
+
+      <p>
+        That's why I wanted to make this website.
+        Not because every memory has to be perfect,
+        but because each one is a part of our story.
+      </p>
+
+      <p>
+        And honestly...
+
+        <br><br>
+
+        I'm really glad I got to experience
+        all of these moments.
+      </p>
+
+    </div>
+
+    <button onclick="go('timeline')">
+      Continue to Our Timeline →
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 6 — TIMELINE
+  ======================================================== -->
+
+  <section class="page top-page" id="timeline">
+
+    <h1>Our Timeline 🕰️</h1>
+
+    <p class="subtitle">
+      A few moments that became part of the story.
+    </p>
+
+    <div class="timeline">
+
+      <div class="timeline-item left">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <h3>The Beginning 💗</h3>
+
+          <p>
+            This is where everything started.
+            Add your own story here.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-item right">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <h3>Our First Memories 📸</h3>
+
+          <p>
+            Add the story behind your first
+            favorite memories together.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-item left">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <h3>A Special Day 🥰</h3>
+
+          <p>
+            Write about a day that became
+            especially memorable.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-item right">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <h3>More Memories 💞</h3>
+
+          <p>
+            Add another important moment
+            from your story.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="timeline-item left">
+
+        <div class="timeline-dot"></div>
+
+        <div class="timeline-content">
+
+          <h3>Today ❤️</h3>
+
+          <p>
+            And here we are,
+            looking back at everything.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <button onclick="go('memories3')">
+      One More Collection →
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 7 — MEMORIES 3
+  ======================================================== -->
+
+  <section class="page top-page" id="memories3">
+
+    <h1>And Of Course... These Too 💕</h1>
+
+    <p class="subtitle">
+      Because apparently I had way too many pictures
+      to put into only two pages 😂
+    </p>
+
+    <div class="memories-grid">
+
+      <!-- CHANGE YOUR PHOTOS HERE -->
+
+      <div class="memory" style="--rotation:-2deg">
+        <img src="mem13.jpg" onclick="openPhoto(this.src)" alt="Memory 13">
+        <div class="memory-caption">💗</div>
+      </div>
+
+      <div class="memory" style="--rotation:3deg">
+        <img src="mem14.jpg" onclick="openPhoto(this.src)" alt="Memory 14">
+        <div class="memory-caption">🥹</div>
+      </div>
+
+      <div class="memory" style="--rotation:-1deg">
+        <img src="mem15.jpg" onclick="openPhoto(this.src)" alt="Memory 15">
+        <div class="memory-caption">💕</div>
+      </div>
+
+      <div class="memory" style="--rotation:2deg">
+        <img src="mem16.jpg" onclick="openPhoto(this.src)" alt="Memory 16">
+        <div class="memory-caption">🫶</div>
+      </div>
+
+      <div class="memory" style="--rotation:-3deg">
+        <img src="mem17.jpg" onclick="openPhoto(this.src)" alt="Memory 17">
+        <div class="memory-caption">❤️</div>
+      </div>
+
+      <div class="memory" style="--rotation:1deg">
+        <img src="mem18.jpg" onclick="openPhoto(this.src)" alt="Memory 18">
+        <div class="memory-caption">Forever special 💗</div>
+      </div>
+
+    </div>
+
+    <p class="memory-note">
+      "More memories that I'll always treasure."
+    </p>
+
+    <button onclick="go('song')">
+      There's a Song Too 🎵 →
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 8 — SONG
+  ======================================================== -->
+
+  <section class="page" id="song">
+
+    <h1>🎵 A Song That Reminds Me</h1>
+
+    <div class="music-card">
+
+      <!--
+        CHANGE THE YOUTUBE VIDEO ID HERE.
+
+        Example:
+        https://www.youtube.com/watch?v=VIDEO_ID
+
+        Put the VIDEO_ID after /embed/
+      -->
+
+      <iframe
+        id="musicPlayer"
+        height="225"
+        src="https://www.youtube-nocookie.com/embed/ok2pqepWTLU?enablejsapi=1"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+
+      <p class="song-note">
+
+        "Some songs are just songs.
+
+        But sometimes you hear one and suddenly
+        it reminds you of a person, a place,
+        or an entire chapter of your life."
+
+        <br><br>
+
+        This one will always remind me
+        of these memories.
+
+      </p>
+
+    </div>
+
+    <button onclick="go('letterIntro')">
+      I Have Something to Say 💌 →
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 9 — LETTER INTRO
+  ======================================================== -->
+
+  <section class="page" id="letterIntro">
+
+    <h1>💌 A Little Letter</h1>
+
+    <p class="subtitle">
+      There are some things that are easier to write
+      than to say out loud.
+    </p>
+
+    <div class="story-card">
+
+      <p style="text-align:center;">
+        So...
+
+        <br><br>
+
+        I wrote something for you.
+
+        <br><br>
+
+        Don't judge my handwriting though 😂
+      </p>
+
+    </div>
+
+    <div class="button-row">
+
+      <button onclick="go('letter')">
+        Open It 💌
+      </button>
+
+      <button class="secondary" onclick="go('memories3')">
+        Maybe Later 😭
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 10 — LETTER
+  ======================================================== -->
+
+  <section class="page top-page" id="letter">
+
+    <h1>💌 A Letter From Me</h1>
+
+    <div class="letter-wrapper">
+
+      <!--
+        CHANGE THIS LETTER TO YOUR OWN MESSAGE
+      -->
+
+      <p>
+        Hello!
+
+        <br><br>
+
+        I wanted to make this little website because
+        sometimes words aren't enough to describe
+        how much certain memories mean to me.
+      </p>
+
+      <p>
+        Looking through all these pictures made me realize
+        just how many moments we've collected together.
+      </p>
+
+      <p>
+        Some of them were big moments,
+        while others were just random little things.
+
+        But honestly, those little things are sometimes
+        the ones I remember the most.
+      </p>
+
+      <p>
+        Thank you for being part of those memories.
+
+        Thank you for all the laughs,
+        conversations, random moments,
+        and everything in between.
+      </p>
+
+      <p>
+        No matter where life takes us,
+        I'll always appreciate the memories
+        that we were able to make.
+      </p>
+
+      <p>
+        And that's what this website is really about.
+
+        <br><br>
+
+        Keeping a little piece of those moments
+        somewhere we can always come back to.
+      </p>
+
+      <div class="letter-signature">
+
+        Always remembering,<br>
+
+        Ronji 💗
+
+      </div>
+
+    </div>
+
+    <button onclick="go('finalMemories')">
+      One Last Memory Collection →
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 11 — FINAL MEMORIES
+  ======================================================== -->
+
+  <section class="page top-page" id="finalMemories">
+
+    <h1>Before We Finish... 💗</h1>
+
+    <div class="memories-grid">
+
+      <div class="memory" style="--rotation:-3deg">
+        <img src="mem19.jpg" onclick="openPhoto(this.src)" alt="Memory 19">
+        <div class="memory-caption">A memory worth keeping</div>
+      </div>
+
+      <div class="memory" style="--rotation:2deg">
+        <img src="mem20.jpg" onclick="openPhoto(this.src)" alt="Memory 20">
+        <div class="memory-caption">One more ❤️</div>
+      </div>
+
+      <div class="memory" style="--rotation:-2deg">
+        <img src="mem21.jpg" onclick="openPhoto(this.src)" alt="Memory 21">
+        <div class="memory-caption">Another favorite 💕</div>
+      </div>
+
+      <div class="memory" style="--rotation:3deg">
+        <img src="mem22.jpg" onclick="openPhoto(this.src)" alt="Memory 22">
+        <div class="memory-caption">Never forgotten 🫶</div>
+      </div>
+
+      <div class="memory" style="--rotation:-1deg">
+        <img src="mem23.jpg" onclick="openPhoto(this.src)" alt="Memory 23">
+        <div class="memory-caption">A special one 💗</div>
+      </div>
+
+      <div class="memory" style="--rotation:2deg">
+        <img src="mem24.jpg" onclick="openPhoto(this.src)" alt="Memory 24">
+        <div class="memory-caption">Until the next memory ❤️</div>
+      </div>
+
+    </div>
+
+    <button onclick="go('final')">
+      Finish the Memories 💌
+    </button>
+
+  </section>
+
+
+  <!-- =======================================================
+       PAGE 12 — FINAL
+  ======================================================== -->
+
+  <section class="page" id="final">
+
+    <div class="final-card">
+
+      <div class="final-heart">
+        💗
+      </div>
+
+      <h1>Thank You For The Memories</h1>
+
+      <p>
+
+        And that's it...
+
+        <br><br>
+
+        At least for this little memory book.
+
+        <br><br>
+
+        I hope whenever you look back at these pictures,
+        they bring back a little bit of the happiness
+        from those moments.
+
+        <br><br>
+
+        Because memories may become part of the past,
+        but that doesn't mean they stop being special.
+
+        <br><br>
+
+        Thank you for being part of my memories.
+
+        <br><br>
+
+        And here's to whatever memories come next. ❤️
+
+      </p>
+
+      <button onclick="go('intro')">
+        Back to the Beginning 💕
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       PHOTO MODAL
+  ======================================================== -->
+
+  <div class="photo-modal" id="photoModal">
+
+    <button
+      class="close-modal"
+      onclick="closePhoto()">
+      ×
+    </button>
+
+    <img id="modalImage" src="" alt="Full size memory">
+
+  </div>
+
+
+  <!-- =======================================================
+       WATERMARK
+  ======================================================== -->
+
+  <div class="watermark">
+    Made with 💖 by Ronji
+  </div>
+
+
+  <!-- =======================================================
+       JAVASCRIPT
+  ======================================================== -->
+
+  <script>
+
+    /* =========================================================
+       PAGE NAVIGATION
+    ========================================================= */
+
+    const pages = document.querySelectorAll('.page');
+
+    let currentPage = 'intro';
+
+    function go(id) {
+
+      pages.forEach(page => {
+        page.classList.remove('active');
+      });
+
+      const nextPage = document.getElementById(id);
+
+      if (nextPage) {
+
+        nextPage.classList.add('active');
+
+        currentPage = id;
+
+        updateProgress();
+
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+
+      }
+
+    }
+
+
+    /* =========================================================
+       PROGRESS BAR
+    ========================================================= */
+
+    const pageOrder = [
+      'intro',
+      'welcome',
+      'memories1',
+      'memories2',
+      'story',
+      'timeline',
+      'memories3',
+      'song',
+      'letterIntro',
+      'letter',
+      'finalMemories',
+      'final'
+    ];
+
+    function updateProgress() {
+
+      const index = pageOrder.indexOf(currentPage);
+
+      if (index === -1) return;
+
+      const percentage =
+        (index / (pageOrder.length - 1)) * 100;
+
+      document.getElementById('progressBar')
+        .style.width = percentage + '%';
+
+    }
+
+
+    /* =========================================================
+       FLOATING HEARTS
+    ========================================================= */
+
+    const heartContainer =
+      document.getElementById('backgroundHearts');
+
+    for (let i = 0; i < 25; i++) {
+
+      const heart =
+        document.createElement('div');
+
+      heart.className = 'heart';
+
+      heart.innerHTML =
+        ['❤', '💕', '💗', '♡'][Math.floor(Math.random() * 4)];
+
+      heart.style.left =
+        Math.random() * 100 + 'vw';
+
+      heart.style.fontSize =
+        12 + Math.random() * 22 + 'px';
+
+      heart.style.animationDuration =
+        6 + Math.random() * 7 + 's';
+
+      heart.style.animationDelay =
+        Math.random() * 8 + 's';
+
+      heartContainer.appendChild(heart);
+
+    }
+
+
+    /* =========================================================
+       PHOTO VIEWER
+    ========================================================= */
+
+    const photoModal =
+      document.getElementById('photoModal');
+
+    const modalImage =
+      document.getElementById('modalImage');
+
+    function openPhoto(src) {
+
+      modalImage.src = src;
+
+      photoModal.classList.add('active');
+
+    }
+
+    function closePhoto() {
+
+      photoModal.classList.remove('active');
+
+      modalImage.src = '';
+
+    }
+
+
+    /* Close photo viewer by clicking outside image */
+
+    photoModal.addEventListener('click', function(event) {
+
+      if (event.target === photoModal) {
+
+        closePhoto();
+
+      }
+
+    });
+
+
+    /* =========================================================
+       ESCAPE KEY CLOSES PHOTO
+    ========================================================= */
+
+    document.addEventListener('keydown', function(event) {
+
+      if (event.key === 'Escape') {
+
+        closePhoto();
+
+      }
+
+    });
+
+
+    /* =========================================================
+       YOUTUBE MUSIC
+    ========================================================= */
+
+    let player;
+
+    let muted = true;
+
+    let started = false;
+
+    const muteBtn =
+      document.getElementById('muteBtn');
+
+
+    function onYouTubeIframeAPIReady() {
+
+      player = new YT.Player(
+        'musicPlayer',
+        {
+          events: {
+            onReady: function() {
+
+              player.mute();
+
+            }
+          }
+        }
+      );
+
+    }
+
+
+    function startMusic() {
+
+      if (!started && player) {
+
+        try {
+
+          player.playVideo();
+
+          started = true;
+
+        } catch (error) {
+
+          console.log(
+            'Music could not start automatically.'
+          );
+
+        }
+
+      }
+
+    }
+
+
+    function toggleMusic() {
+
+      startMusic();
+
+      if (!player) return;
+
+      if (muted) {
+
+        player.unMute();
+
+        muteBtn.textContent = '🔊';
+
+        muted = false;
+
+      } else {
+
+        player.mute();
+
+        muteBtn.textContent = '🔇';
+
+        muted = true;
+
+      }
+
+    }
+
+
+    muteBtn.addEventListener(
+      'click',
+      toggleMusic
+    );
+
+
+    /* =========================================================
+       START MUSIC AFTER FIRST USER INTERACTION
+    ========================================================= */
+
+    document.addEventListener(
+      'click',
+      function startAfterInteraction() {
+
+        startMusic();
+
+        document.removeEventListener(
+          'click',
+          startAfterInteraction
+        );
+
+      },
+      {
+        once: true
+      }
+    );
+
+
+    /* =========================================================
+       YOUTUBE API
+    ========================================================= */
+
+    const youtubeScript =
+      document.createElement('script');
+
+    youtubeScript.src =
+      'https://www.youtube.com/iframe_api';
+
+    document.head.appendChild(youtubeScript);
+
+
+    /* =========================================================
+       INITIALIZE
+    ========================================================= */
+
+    updateProgress();
+
+  </script>
+
+</body>
+</html>
