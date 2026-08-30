@@ -895,7 +895,7 @@
         story here means something to me.
       </p>
 
-      <button onclick="goToWelcome()">
+      <button id="openMemoriesBtn">
         Open Our Memories 💕
       </button>
 
@@ -1627,17 +1627,6 @@
 
     }
 
-    // Special function for the "Open Our Memories" button
-    function goToWelcome() {
-      // First navigate to the welcome page
-      go('welcome');
-      
-      // Then start the music
-      setTimeout(function() {
-        startMusic();
-      }, 500);
-    }
-
 
     /* =========================================================
        PROGRESS BAR
@@ -1783,9 +1772,11 @@
             console.log('Player ready');
             playerReady = true;
             event.target.mute();
+            // Auto-start after player is ready
+            startMusic();
           },
           onStateChange: function(event) {
-            // If video ends, try to replay
+            // If video ends, replay
             if (event.data === YT.PlayerState.ENDED) {
               player.seekTo(0);
               player.playVideo();
@@ -1796,15 +1787,17 @@
     }
 
     function startMusic() {
-      if (playerReady && player && !started) {
+      if (playerReady && player) {
         try {
           player.playVideo();
           started = true;
           console.log('Music started');
-          // Also unmute if needed - but we'll let the user control that
         } catch (error) {
           console.log('Music could not start automatically:', error);
         }
+      } else {
+        // Try again after a short delay
+        setTimeout(startMusic, 300);
       }
     }
 
@@ -1833,23 +1826,27 @@
 
     // Try to start music on any user interaction (fallback)
     function tryStartMusic() {
-      startMusic();
+      if (!started) {
+        startMusic();
+      }
       // Remove all listeners after first interaction
       document.removeEventListener('click', tryStartMusic);
       document.removeEventListener('touchstart', tryStartMusic);
     }
 
+    // Add event listeners for user interaction
     document.addEventListener('click', tryStartMusic);
     document.addEventListener('touchstart', tryStartMusic);
 
-    // Also try to start when navigating to the song page
-    const originalGo = go;
-    go = function(id) {
-      originalGo(id);
-      if (id === 'song') {
-        setTimeout(startMusic, 500);
-      }
-    };
+    // Special handling for the "Open Our Memories" button
+    document.getElementById('openMemoriesBtn').addEventListener('click', function() {
+      // Navigate to welcome page
+      go('welcome');
+      // Try to start music
+      setTimeout(function() {
+        startMusic();
+      }, 100);
+    });
 
 
     /* =========================================================
@@ -1869,16 +1866,19 @@
         // Try to find the iframe directly
         const iframe = document.getElementById('musicPlayer');
         if (iframe) {
-          // Simple fallback: just show the video with autoplay
-          const videoId = 'v7M6fGc37cI';
-          // Add autoplay parameter if not already there
+          // Simple fallback: reload the iframe with autoplay
           let src = iframe.src;
           if (!src.includes('autoplay')) {
             iframe.src = src + '&autoplay=1';
           }
+          // Also try to reload the iframe to force autoplay
+          setTimeout(function() {
+            const currentSrc = iframe.src;
+            iframe.src = currentSrc;
+          }, 200);
         }
       }
-    }, 5000);
+    }, 3000);
 
 
     /* =========================================================
