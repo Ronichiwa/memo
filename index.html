@@ -1312,7 +1312,7 @@
       <iframe
         id="musicPlayer"
         height="225"
-        src="https://www.youtube-nocookie.com/embed/v7M6fGc37cI?si=_GLrpj_c3RHJZSZl"
+        src="https://www.youtube.com/embed/v7M6fGc37cI?si=_GLrpj_c3RHJZSZl&enablejsapi=1"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen>
       </iframe>
@@ -1594,7 +1594,6 @@
   ======================================================== -->
 
   <script>
-
     /* =========================================================
        PAGE NAVIGATION
     ========================================================= */
@@ -1757,122 +1756,117 @@
     ========================================================= */
 
     let player;
-
     let muted = true;
-
     let started = false;
+    let playerReady = false;
 
-    const muteBtn =
-      document.getElementById('muteBtn');
+    const muteBtn = document.getElementById('muteBtn');
 
-
+    // This function is called by the YouTube API when it's ready
     function onYouTubeIframeAPIReady() {
+      console.log('YouTube API ready');
 
-      player = new YT.Player(
-        'musicPlayer',
-        {
-          events: {
-            onReady: function() {
-
-              player.mute();
-
+      player = new YT.Player('musicPlayer', {
+        events: {
+          onReady: function(event) {
+            console.log('Player ready');
+            playerReady = true;
+            event.target.mute();
+          },
+          onStateChange: function(event) {
+            // If video ends, try to replay
+            if (event.data === YT.PlayerState.ENDED) {
+              player.seekTo(0);
+              player.playVideo();
             }
           }
         }
-      );
-
+      });
     }
-
 
     function startMusic() {
-
-      if (!started && player) {
-
+      if (playerReady && player && !started) {
         try {
-
           player.playVideo();
-
           started = true;
-
+          console.log('Music started');
         } catch (error) {
-
-          console.log(
-            'Music could not start automatically.'
-          );
-
+          console.log('Music could not start automatically:', error);
         }
-
       }
-
     }
 
-
     function toggleMusic() {
+      if (!player || !playerReady) {
+        console.log('Player not ready yet');
+        return;
+      }
 
       startMusic();
 
-      if (!player) return;
-
       if (muted) {
-
         player.unMute();
-
         muteBtn.textContent = '🔊';
-
         muted = false;
-
+        console.log('Unmuted');
       } else {
-
         player.mute();
-
         muteBtn.textContent = '🔇';
-
         muted = true;
-
+        console.log('Muted');
       }
-
     }
 
+    muteBtn.addEventListener('click', toggleMusic);
 
-    muteBtn.addEventListener(
-      'click',
-      toggleMusic
-    );
+    // Try to start music on any user interaction
+    function tryStartMusic() {
+      startMusic();
+      // Remove all listeners after first interaction
+      document.removeEventListener('click', tryStartMusic);
+      document.removeEventListener('touchstart', tryStartMusic);
+    }
 
+    document.addEventListener('click', tryStartMusic);
+    document.addEventListener('touchstart', tryStartMusic);
 
-    /* =========================================================
-       START MUSIC AFTER FIRST USER INTERACTION
-    ========================================================= */
-
-    document.addEventListener(
-      'click',
-      function startAfterInteraction() {
-
-        startMusic();
-
-        document.removeEventListener(
-          'click',
-          startAfterInteraction
-        );
-
-      },
-      {
-        once: true
+    // Also try to start when navigating to the song page
+    const originalGo = go;
+    go = function(id) {
+      originalGo(id);
+      if (id === 'song') {
+        setTimeout(startMusic, 500);
       }
-    );
+    };
 
 
     /* =========================================================
        YOUTUBE API
     ========================================================= */
 
-    const youtubeScript =
-      document.createElement('script');
-
-    youtubeScript.src =
-      'https://www.youtube.com/iframe_api';
-
+    // Load the YouTube API script
+    const youtubeScript = document.createElement('script');
+    youtubeScript.src = 'https://www.youtube.com/iframe_api';
+    youtubeScript.async = true;
     document.head.appendChild(youtubeScript);
+
+    // Fallback in case the API doesn't load properly
+    setTimeout(function() {
+      if (!playerReady) {
+        console.log('YouTube API may not have loaded. Trying fallback...');
+        // Try to find the iframe directly
+        const iframe = document.getElementById('musicPlayer');
+        if (iframe) {
+          // Simple fallback: just show the video with autoplay
+          const videoId = 'v7M6fGc37cI';
+          // Add autoplay parameter if not already there
+          let src = iframe.src;
+          if (!src.includes('autoplay')) {
+            iframe.src = src + '&autoplay=1';
+          }
+        }
+      }
+    }, 5000);
 
 
     /* =========================================================
