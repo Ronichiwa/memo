@@ -895,7 +895,7 @@
         story here means something to me.
       </p>
 
-      <button onclick="go('welcome')">
+      <button onclick="goToWelcome()">
         Open Our Memories 💕
       </button>
 
@@ -1627,6 +1627,17 @@
 
     }
 
+    // Special function for the "Open Our Memories" button
+    function goToWelcome() {
+      // First navigate to the welcome page
+      go('welcome');
+      
+      // Then start the music
+      setTimeout(function() {
+        startMusic();
+      }, 500);
+    }
+
 
     /* =========================================================
        PROGRESS BAR
@@ -1790,6 +1801,7 @@
           player.playVideo();
           started = true;
           console.log('Music started');
+          // Also unmute if needed - but we'll let the user control that
         } catch (error) {
           console.log('Music could not start automatically:', error);
         }
@@ -1819,7 +1831,7 @@
 
     muteBtn.addEventListener('click', toggleMusic);
 
-    // Try to start music on any user interaction
+    // Try to start music on any user interaction (fallback)
     function tryStartMusic() {
       startMusic();
       // Remove all listeners after first interaction
